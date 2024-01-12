@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogInActivity">
+    tools:context=".LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,10 +29,11 @@
             android:layout_marginRight="5dp"
             android:layout_gravity="center">
             <EditText
+                android:id="@+id/input_login_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_background"
-                android:hint="아이디 또는 이메일 주소" />
+                android:hint="이메일 주소" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -42,6 +43,7 @@
             android:layout_margin="5dp"
             app:passwordToggleEnabled="true">
             <EditText
+                android:id="@+id/input_login_pw"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:background="@drawable/rect_background"
@@ -52,6 +54,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/forgot_pw_txt"
             android:text="비밀번호를 잊으셨나요?"
             android:clickable="true"
             android:layout_marginTop="20dp"
@@ -61,6 +64,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/login_btn"
             android:text="로그인"
             android:layout_margin="10dp"/>
         <RelativeLayout
@@ -77,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원가입"
+                android:id="@+id/signup_txt"
                 android:clickable="true"
                 android:layout_toRightOf="@+id/dont_account_txt"
                 android:textColor="#0E64D2"/>
@@ -115,6 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/login_google_btn"
             android:text="구글로 로그인"
             android:layout_margin="5dp"/>
     </LinearLayout>

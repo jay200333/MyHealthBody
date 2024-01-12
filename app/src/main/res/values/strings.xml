@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyHealthyBody</string>
+    <string name="default_web_client_id" translatable="false">775482838959-9c2739pas6j9l2ta6bp9gih1b0apuem3.apps.googleusercontent.com</string>
+    <string name="emailFormat">^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$</string>
 </resources>
