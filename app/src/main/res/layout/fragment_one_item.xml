@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/carView" android:layout_margin="5dp"
+        app:cardCornerRadius="10dp" tools:ignore="MissingConstraints">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <WebView android:layout_width="80dp" android:layout_height="80dp"
+                android:layout_margin="10dp" android:id="@+id/exercise_img" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/exercise_name" android:textSize="20sp" android:textStyle="bold"
+                android:layout_marginTop="10dp" android:layout_toRightOf="@+id/exercise_img" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/exercise_target" android:textSize="15sp"
+                android:layout_toEndOf="@id/exercise_img"
+                android:layout_below="@+id/exercise_name" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

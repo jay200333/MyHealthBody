@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".FragmentOneItemActivity">
+
+    <WebView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" android:id="@+id/gifWebview" android:padding="2dp"
+        android:layout_margin="4dp" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/exercise_name" android:textStyle="bold" android:textSize="20sp"
+        android:layout_below="@+id/gifWebview" android:layout_margin="5dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_below="@+id/exercise_name" android:id="@+id/target_linear"
+        android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/exercise_name" android:layout_margin="5dp"
+            android:textStyle="bold" android:text="집중 영역" android:id="@+id/target_txt"
+            android:textSize="16sp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/exercise_target" android:layout_margin="5dp" android:textSize="16sp"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/equipment_linear" android:layout_below="@+id/target_linear"
+        android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_margin="5dp" android:text="장비" android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/exercise_equipment" android:textSize="16sp"
+            android:layout_margin="5dp" />
+    </LinearLayout>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="운동 설명" android:textSize="16sp" android:textStyle="italic"
+        android:id="@+id/instruction_txt" android:layout_below="@+id/equipment_linear"
+        android:layout_margin="5dp" />
+
+    <ListView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/exercise_instruction" android:layout_above="@id/complete_btn"
+        android:layout_below="@id/instruction_txt" android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp" android:layout_marginRight="5dp" />
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="5dp" android:layout_gravity="center" android:text="완료"
+        android:id="@+id/complete_btn" android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

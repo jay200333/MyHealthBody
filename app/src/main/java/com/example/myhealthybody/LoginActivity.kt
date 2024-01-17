@@ -11,14 +11,13 @@ import com.example.myhealthybody.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
     // Google 로그인 결과를 처리하기 위한 ActivityResultLauncher
     private val requestLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
-        result ->
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
@@ -32,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val loginBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
             val password = loginBinding.inputLoginPw.text.toString()
             Log.d("kim", "email: $email, password: $password")
             MyApplication.auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this){ task ->
+                .addOnCompleteListener(this) { task ->
                     loginBinding.inputLoginId.text.clear()
                     loginBinding.inputLoginPw.text.clear()
                     if (task.isSuccessful) {
@@ -62,18 +62,18 @@ class LoginActivity : AppCompatActivity() {
                             MyApplication.email = email
                             val loginIntent = Intent(this, MainViewActivity::class.java)
                             startActivity(loginIntent)
+                        } else {
+                            Toast.makeText(
+                                baseContext,
+                                "전송된 메일로 이메일 인증이 되지 않았습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        else {
-                            Toast.makeText(baseContext, "전송된 메일로 이메일 인증이 되지 않았습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else {
+                    } else {
                         Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
-
-
 
         // 비밀번호를 잊으셨나요 클릭시 비밀번호 찾는 화면으로 이동
         loginBinding.forgotPwTxt.setOnClickListener {

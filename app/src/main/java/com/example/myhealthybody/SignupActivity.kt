@@ -1,11 +1,7 @@
 package com.example.myhealthybody
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.example.myhealthybody.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +18,7 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         mdatabase = FirebaseDatabase.getInstance().reference
-        
+
         // 로그인 텍스트 클릭시 로그인 화면으로 전환
         signupBinding.loginTxt.setOnClickListener {
             finish()
@@ -31,7 +27,7 @@ class SignupActivity : AppCompatActivity() {
         signupBinding.checkBtn.setOnClickListener {
             val pw = signupBinding.signupPw.text.toString()
             val pw2 = signupBinding.signupPw2.text.toString()
-            if (pw.length < 6 && pw2.length < 6) {
+            if (pw.length >= 6 && pw2.length >= 6) {
                 if (pw == pw2) {
                     Toast.makeText(baseContext, "비밀번호 일치", Toast.LENGTH_SHORT).show()
                     signupBinding.signupBtn.isEnabled = true
@@ -54,10 +50,12 @@ class SignupActivity : AppCompatActivity() {
                             MyApplication.auth.currentUser?.sendEmailVerification()
                                 ?.addOnCompleteListener { sendTask ->
                                     if (sendTask.isSuccessful) {
-                                        Toast.makeText(baseContext,
+                                        Toast.makeText(
+                                            baseContext,
                                             "회원가입이 완료되었습니다." +
-                                            "전송된 메일을 확인해 주세요.",
-                                            Toast.LENGTH_SHORT).show()
+                                                    "전송된 메일을 확인해 주세요.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     } else {
                                         Toast.makeText(baseContext, "메일 발송 실패", Toast.LENGTH_SHORT)
                                             .show()

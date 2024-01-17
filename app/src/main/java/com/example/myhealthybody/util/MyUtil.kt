@@ -19,9 +19,10 @@ fun myCheckPermission(activity: AppCompatActivity) {
     }
 
     if (ContextCompat.checkSelfPermission(
-        activity,
-        Manifest.permission.READ_EXTERNAL_STORAGE
-        ) !== PackageManager.PERMISSION_GRANTED) {
+            activity,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) !== PackageManager.PERMISSION_GRANTED
+    ) {
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 }

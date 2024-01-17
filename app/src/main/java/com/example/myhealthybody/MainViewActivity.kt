@@ -1,35 +1,48 @@
 package com.example.myhealthybody
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.myhealthybody.databinding.ActivityMainViewBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainViewActivity : AppCompatActivity() {
-    lateinit var mvBinding : ActivityMainViewBinding
+    private lateinit var mvBinding: ActivityMainViewBinding
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mvBinding = ActivityMainViewBinding.inflate(layoutInflater)
         setContentView(mvBinding.root)
+        setViewpagerInit()
+        setTabInit()
+    }
 
+    private fun setViewpagerInit() {
+        val fragmentList = listOf(
+            FragmentOne(),
+            FragmentTwo(),
+            FragmentThree()
+        )
+        viewPagerAdapter = ViewPagerAdapter(this)
+        viewPagerAdapter.fragments.addAll(fragmentList)
+        mvBinding.mainViewPager.adapter = viewPagerAdapter
+    }
 
-        mvBinding.logoutBtn.setOnClickListener {
-            // Firebase에서 로그아웃 처리
-            MyApplication.auth.signOut()
+    private fun setTabInit() {
+        TabLayoutMediator(mvBinding.mainViewTabs, mvBinding.mainViewPager) { tab, pos ->
+            tab.text = pos.toString()
+            when (pos) {
+                0 -> {
+                    tab.text = "훈련"
+                }
 
-            // Google 로그아웃 처리 (필요한 경우)
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-            val googleLoginClient = GoogleSignIn.getClient(this, gso)
-            googleLoginClient.signOut()
+                1 -> {
+                    tab.text = "공백"
+                }
 
-            // 로그아웃 후 로그인 화면으로 이동
-            val logOutIntent = Intent(this, LoginActivity::class.java)
-            startActivity(logOutIntent)
-            finish()
-        }
+                2 -> {
+                    tab.text = "설정"
+                }
+            }
+        }.attach()
     }
 }
