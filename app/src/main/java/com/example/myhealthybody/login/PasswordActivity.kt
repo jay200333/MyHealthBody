@@ -1,8 +1,10 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.myhealthybody.mainView.MyApplication
+import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityPasswordBinding
 import java.util.regex.Pattern
 

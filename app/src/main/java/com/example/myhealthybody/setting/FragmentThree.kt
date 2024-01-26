@@ -1,4 +1,4 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.setting
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myhealthybody.databinding.FragmentThreeBinding
+import com.example.myhealthybody.login.LoginActivity
+import com.example.myhealthybody.mainView.MyApplication
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 

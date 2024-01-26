@@ -1,4 +1,4 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.mainView
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.auth.FirebaseAuth

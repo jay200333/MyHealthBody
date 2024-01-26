@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".FragmentOneItemActivity">
+    android:layout_height="match_parent" tools:context=".healthTab.FragmentOneItemActivity">
 
     <WebView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" android:id="@+id/gifWebview" android:padding="2dp"
@@ -36,12 +36,14 @@
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="운동 설명" android:textSize="16sp" android:textStyle="italic"
         android:id="@+id/instruction_txt" android:layout_below="@+id/equipment_linear"
-        android:layout_margin="5dp" />
+        android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp" />
 
-    <ListView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:id="@+id/exercise_instruction" android:layout_above="@id/complete_btn"
-        android:layout_below="@id/instruction_txt" android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" android:layout_marginRight="5dp" />
+    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/exercise_instruction"
+        android:layout_above="@id/complete_btn" android:layout_below="@id/instruction_txt"
+        android:layout_marginTop="10dp" android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_margin="5dp" android:layout_gravity="center" android:text="완료"
         android:id="@+id/complete_btn" android:layout_alignParentBottom="true" />

@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerDecoration(val context: Context): RecyclerView.ItemDecoration() {
+class RecyclerDecoration(val context: Context) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -14,7 +14,7 @@ class RecyclerDecoration(val context: Context): RecyclerView.ItemDecoration() {
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(30, 30, 30, 30)
-        ViewCompat.setElevation(view, 20.0f)
+        outRect.set(16, 16, 16, 16)
+        ViewCompat.setElevation(view, 10.0f)
     }
 }

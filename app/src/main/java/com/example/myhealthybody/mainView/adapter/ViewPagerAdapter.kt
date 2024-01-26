@@ -1,4 +1,4 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.mainView.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

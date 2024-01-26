@@ -1,8 +1,9 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.myhealthybody.mainView.MyApplication
 import com.example.myhealthybody.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
