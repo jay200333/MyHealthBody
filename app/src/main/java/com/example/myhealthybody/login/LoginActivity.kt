@@ -14,6 +14,7 @@ import com.example.myhealthybody.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,9 +27,18 @@ class LoginActivity : AppCompatActivity() {
             try {
                 // Google 로그인 성공시, MainViewActivity로 이동
                 val account = task.getResult(ApiException::class.java)
-                val intent = Intent(this, MainViewActivity::class.java)
-                startActivity(intent)
-                finish()
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                MyApplication.auth.signInWithCredential(credential).addOnCompleteListener(this){ authTask ->
+                        if (authTask.isSuccessful) {
+                            // 구글 로그인 성공 및 Firebase Authentication 등록 성공, MainViewActivity로 이동
+                            val intent = Intent(this, MainViewActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // Firebase Authentication 등록 실패
+                            Toast.makeText(baseContext, "Firebase 인증 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    }
             } catch (e: ApiException) {
                 Toast.makeText(baseContext, "구글 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }

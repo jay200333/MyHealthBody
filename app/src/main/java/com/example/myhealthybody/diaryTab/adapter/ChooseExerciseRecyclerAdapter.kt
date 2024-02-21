@@ -1,9 +1,11 @@
 package com.example.myhealthybody.diaryTab.adapter
 
 import android.content.Intent
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myhealthybody.ExerciseData
+import com.example.myhealthybody.model.ExerciseData
+import com.example.myhealthybody.ExerciseViewModel
 import com.example.myhealthybody.adapter.BaseAdapter
 import com.example.myhealthybody.databinding.ChooseExerciseItemBinding
 import com.example.myhealthybody.healthTab.FragmentOneItemActivity
@@ -14,30 +16,50 @@ interface OnCheckboxChangeCallback {
 
 class ChooseExerciseRecyclerAdapter(
     val exercises: List<ExerciseData>,
+    private val viewModel: ExerciseViewModel,
     private val checkboxChangeCallback: OnCheckboxChangeCallback
 ) :
     BaseAdapter<ExerciseData, ChooseExerciseItemBinding>(
         exercises,
         ChooseExerciseItemBinding::inflate
     ) {
-    private val checkedItems = mutableSetOf<Int>()
+    private var filteredExercises: List<ExerciseData> = exercises
+    private val checkedItems = mutableSetOf<String>()
+
+    fun filterByTarget(target: String) {
+        filteredExercises = if (target == "All") {
+            exercises
+        } else {
+            exercises.filter { it.target == target }
+        }
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = filteredExercises.size
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(filteredExercises[position])
+    }
+
     override fun getViewHolder(binding: ChooseExerciseItemBinding): BaseViewHolder =
         ChooseExerciseViewHolder(binding)
 
     inner class ChooseExerciseViewHolder(private val binding: ChooseExerciseItemBinding) :
         BaseViewHolder(binding) {
-        init {
+        override fun bind(item: ExerciseData) {
+            binding.checkboxExercise.setOnCheckedChangeListener(null)
+            binding.checkboxExercise.isChecked = checkedItems.contains(item.id)
+
             binding.checkboxExercise.setOnCheckedChangeListener { _, isChecked ->
-                val position = absoluteAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    if (isChecked) {
-                        checkedItems.add(position)
-                    } else {
-                        checkedItems.remove(position)
-                    }
-                    checkboxChangeCallback.onCheckedChange(isChecked, checkedItems.size)
+                if (isChecked) {
+                    checkedItems.add(item.id)
+                } else {
+                    checkedItems.remove(item.id)
                 }
+                checkboxChangeCallback.onCheckedChange(isChecked, checkedItems.size)
+                viewModel.setCheckedExercises(checkedItems.mapNotNull { id -> exercises.find { it.id == id } })
             }
+
             binding.infoExerciseImg.setOnClickListener {
                 val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -47,10 +69,7 @@ class ChooseExerciseRecyclerAdapter(
                     itemView.context.startActivity(intent)
                 }
             }
-        }
-
-        override fun bind(item: ExerciseData) {
-            binding.checkboxExercise.isChecked = checkedItems.contains(absoluteAdapterPosition)
+            binding.checkboxExercise.isChecked = checkedItems.contains(item.id)
             binding.exerciseName.text = item.name
             val exerciseImg = binding.exerciseImg
             Glide.with(itemView.context)
@@ -59,6 +78,7 @@ class ChooseExerciseRecyclerAdapter(
                 .into(exerciseImg)
         }
     }
+
 
     private fun putData(intent: Intent, exercise: ExerciseData) {
         intent.putExtra("itemExerciseName", exercise.name)

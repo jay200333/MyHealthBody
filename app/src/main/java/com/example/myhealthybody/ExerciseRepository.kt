@@ -1,6 +1,7 @@
 package com.example.myhealthybody
 
 import android.util.Log
+import com.example.myhealthybody.model.ExerciseData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

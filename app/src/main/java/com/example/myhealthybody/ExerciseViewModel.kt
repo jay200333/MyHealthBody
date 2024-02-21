@@ -1,10 +1,10 @@
 package com.example.myhealthybody
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.myhealthybody.model.ExerciseData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,6 +12,9 @@ import retrofit2.Response
 class ExerciseViewModel : ViewModel() {
     private val _exercisesData = MutableLiveData<List<ExerciseData>>()
     val exerciseData: LiveData<List<ExerciseData>> = _exercisesData
+
+    private val _checkedExercises = MutableLiveData<List<ExerciseData>>()
+    val checkedExercises: LiveData<List<ExerciseData>> = _checkedExercises
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
@@ -34,5 +37,9 @@ class ExerciseViewModel : ViewModel() {
                 _error.postValue(t.message ?: "An unknown error occurred")
             }
         })
+    }
+
+    fun setCheckedExercises(checkedItems: List<ExerciseData>) {
+        _checkedExercises.value = checkedItems
     }
 }

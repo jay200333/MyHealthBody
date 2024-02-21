@@ -8,19 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myhealthybody.ExerciseData
-import com.example.myhealthybody.ExerciseRepository
+import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.R
 import com.example.myhealthybody.RecyclerDecoration
 import com.example.myhealthybody.databinding.FragmentOneBinding
 import com.example.myhealthybody.healthTab.adapter.RecyclerAdapter
-import com.example.myhealthybody.mainView.MainViewActivity
+import com.google.android.material.tabs.TabLayout
 
 class FragmentOne : Fragment() {
     private lateinit var mBinding: FragmentOneBinding
@@ -39,6 +36,7 @@ class FragmentOne : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupTabs()
         recyclerView = mBinding.fragmentOneRecyclerView
 
         // ViewModel 초기화 및 데이터 로드
@@ -53,6 +51,30 @@ class FragmentOne : Fragment() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             showError(errorMessage)
         }
+    }
+
+    private fun setupTabs() {
+        val exerciseTargets = resources.getStringArray(R.array.exercise_targets)
+        val tabLayout = mBinding.healthFilterTab
+        exerciseTargets.forEach { target ->
+            tabLayout.addTab(tabLayout.newTab().setText(target))
+        }
+
+        // 탭 모드를 스크롤 가능하게 설정
+        tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val selectedTarget = tab?.text.toString()
+                recyclerAdapter.filterByTarget(selectedTarget)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
     private fun setupRecyclerView(exercisesData: List<ExerciseData>) {

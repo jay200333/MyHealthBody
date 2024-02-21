@@ -1,17 +1,34 @@
 package com.example.myhealthybody.healthTab.adapter
 
 import com.bumptech.glide.Glide
-import com.example.myhealthybody.ExerciseData
+import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.adapter.BaseAdapter
 import com.example.myhealthybody.databinding.FragmentOneItemBinding
 
 class RecyclerAdapter(
-    exercises: List<ExerciseData>,
+    private var exercises: List<ExerciseData>,
     private val onItemClicked: (ExerciseData) -> Unit
 ) :
     BaseAdapter<ExerciseData, FragmentOneItemBinding>(exercises, FragmentOneItemBinding::inflate) {
+    private var filteredExercises: List<ExerciseData> = exercises
+
+    fun filterByTarget(target: String) {
+        filteredExercises = if (target == "All") {
+            exercises
+        } else {
+            exercises.filter { it.target == target }
+        }
+        notifyDataSetChanged()
+    }
+
     override fun getViewHolder(binding: FragmentOneItemBinding): BaseViewHolder =
         FirstFragmentViewHolder(binding)
+
+    override fun getItemCount(): Int = filteredExercises.size
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(filteredExercises[position])
+    }
 
     inner class FirstFragmentViewHolder(private val binding: FragmentOneItemBinding) :
         BaseViewHolder(binding) {

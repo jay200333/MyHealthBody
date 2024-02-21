@@ -47,4 +47,26 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string-array name="exercise_targets">
+        <item>All</item>
+        <item>abductors</item>
+        <item>abs</item>
+        <item>adductors</item>
+        <item>biceps</item>
+        <item>calves</item>
+        <item>cardiovascular system</item>
+        <item>delts</item>
+        <item>forearms</item>
+        <item>glutes</item>
+        <item>hamstrings</item>
+        <item>lats</item>
+        <item>levator scapulae</item>
+        <item>pectorals</item>
+        <item>quads</item>
+        <item>serratus anterior</item>
+        <item>spine</item>
+        <item>traps</item>
+        <item>triceps</item>
+        <item>upper back</item>
+    </string-array>
 </resources>

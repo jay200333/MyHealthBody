@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exercise_target"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/exercise_name" android:layout_toRightOf="@+id/exercise_target"
+            android:textStyle="bold" />
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:clickable="true" android:id="@+id/info_exercise_img"
+            android:layout_marginEnd="20dp" android:background="@color/black"
+            android:src="@drawable/ic_info_exercise" android:layout_alignParentEnd="true" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/exercise_target" android:id="@+id/total_weight"
+            android:layout_marginTop="5dp" android:text="총 운동량" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:id="@+id/init_set"
+            android:layout_below="@+id/total_weight" android:layout_margin="5dp" >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="세트"
+                android:layout_weight="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="kg"
+                android:layout_weight="1" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="회"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/init_set"
+                android:id="@+id/layoutContainer"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+                android:layout_below="@id/layoutContainer"
+                android:id="@+id/btn_linear"
+                android:layout_margin="10dp">
+<!--            android:layout_alignParentBottom="true"-->
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="- 세트삭제"
+                android:id="@+id/set_delete_btn"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="+ 세트추가"
+                android:id="@+id/set_add_btn"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

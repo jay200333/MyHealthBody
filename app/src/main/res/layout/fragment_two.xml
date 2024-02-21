@@ -13,5 +13,6 @@
         android:layout_height="wrap_content" android:id="@+id/fragment_two_recyclerview"
         android:visibility="gone" />
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="운동 계획하기" android:id="@+id/exercise_choice_btn" android:layout_marginTop="15dp" />
+        android:text="운동 계획하기" android:id="@+id/exercise_choice_btn"
+        android:layout_marginTop="15dp" />
 </LinearLayout>

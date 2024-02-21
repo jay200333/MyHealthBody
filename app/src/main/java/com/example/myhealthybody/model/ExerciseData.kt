@@ -1,4 +1,6 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.model
+
+import java.io.Serializable
 
 data class ExerciseData(
     val bodyPart: String,
@@ -8,5 +10,6 @@ data class ExerciseData(
     val name: String,
     val target: String,
     val secondaryMuscles: List<String>,
-    val instructions: List<String>
-)
+    val instructions: List<String>,
+    val setItems: List<SetItem>
+) : Serializable

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.example.myhealthybody.databinding.ActivityMainBinding
 import com.example.myhealthybody.login.LoginActivity
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var mbinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,26 +29,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        }
-    }
-
-    private fun myCheckPermission(activity: AppCompatActivity) {
-        val requestPermissionLauncher = activity.registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) {
-            if (it) {
-                Toast.makeText(activity, "권한 승인", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(activity, "권한 거부", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        if (ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) !== PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 }
