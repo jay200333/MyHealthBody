@@ -16,6 +16,9 @@ class ExerciseViewModel : ViewModel() {
     private val _checkedExercises = MutableLiveData<List<ExerciseData>>()
     val checkedExercises: LiveData<List<ExerciseData>> = _checkedExercises
 
+    private val _checkedCount = MutableLiveData<Int>()
+    val checkedCount: LiveData<Int> = _checkedCount
+
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
@@ -41,5 +44,6 @@ class ExerciseViewModel : ViewModel() {
 
     fun setCheckedExercises(checkedItems: List<ExerciseData>) {
         _checkedExercises.value = checkedItems
+        _checkedCount.value = checkedItems.size
     }
 }

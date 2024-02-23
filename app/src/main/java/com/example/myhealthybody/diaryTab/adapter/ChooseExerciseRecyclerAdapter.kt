@@ -11,7 +11,7 @@ import com.example.myhealthybody.databinding.ChooseExerciseItemBinding
 import com.example.myhealthybody.healthTab.FragmentOneItemActivity
 
 interface OnCheckboxChangeCallback {
-    fun onCheckedChange(isChecked: Boolean, position: Int)
+    fun onCheckedChange(isChecked: Boolean, exerciseData: ExerciseData)
 }
 
 class ChooseExerciseRecyclerAdapter(
@@ -51,12 +51,13 @@ class ChooseExerciseRecyclerAdapter(
             binding.checkboxExercise.isChecked = checkedItems.contains(item.id)
 
             binding.checkboxExercise.setOnCheckedChangeListener { _, isChecked ->
+                //val exercise = filteredExercises[adapterPosition]
                 if (isChecked) {
                     checkedItems.add(item.id)
                 } else {
                     checkedItems.remove(item.id)
                 }
-                checkboxChangeCallback.onCheckedChange(isChecked, checkedItems.size)
+                checkboxChangeCallback.onCheckedChange(isChecked, item)
                 viewModel.setCheckedExercises(checkedItems.mapNotNull { id -> exercises.find { it.id == id } })
             }
 
@@ -76,6 +77,15 @@ class ChooseExerciseRecyclerAdapter(
                 .asBitmap()
                 .load(item.gifUrl)
                 .into(exerciseImg)
+        }
+    }
+
+    fun uncheckExercise(exerciseId: String) {
+        val index = exercises.indexOfFirst { it.id == exerciseId }
+        if (index != -1) {
+            checkedItems.remove(exerciseId)
+            notifyItemChanged(index)
+            viewModel.setCheckedExercises(checkedItems.mapNotNull { id -> exercises.find { it.id == id } })
         }
     }
 

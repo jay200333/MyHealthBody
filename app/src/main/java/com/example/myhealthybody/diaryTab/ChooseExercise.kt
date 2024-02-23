@@ -13,6 +13,7 @@ import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityChooseExerciseBinding
 import com.example.myhealthybody.diaryTab.adapter.ChooseExerciseRecyclerAdapter
 import com.example.myhealthybody.diaryTab.adapter.OnCheckboxChangeCallback
+import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
 import java.io.Serializable
 
@@ -33,6 +34,9 @@ class ChooseExercise : AppCompatActivity(), OnCheckboxChangeCallback {
 
         viewModel.exerciseData.observe(this) { exercises ->
             setUpRecyclerView(exercises)
+        }
+        viewModel.checkedCount.observe(this) { count ->
+            updateCheckedCount(count)
         }
         binding.countChooseBtn.setOnClickListener {
             val selectedExercises = viewModel.checkedExercises.value ?: return@setOnClickListener
@@ -74,14 +78,40 @@ class ChooseExercise : AppCompatActivity(), OnCheckboxChangeCallback {
         }
     }
 
-    override fun onCheckedChange(isChecked: Boolean, checkedCount: Int) {
-        // 체크박스 변경에 따라 텍스트 업데이트
-        if (checkedCount == 0) {
-            binding.countChooseBtn.text = "운동을 선택해주세요!"
-            binding.countChooseBtn.isEnabled = false
-        } else {
-            binding.countChooseBtn.text = "${checkedCount}개의 운동 추가하기"
-            binding.countChooseBtn.isEnabled = true
+    override fun onCheckedChange(
+        isChecked: Boolean,
+        exerciseData: ExerciseData
+    ) {
+        runOnUiThread {
+            if (isChecked) {
+                val chip = Chip(this).apply {
+                    text = exerciseData.name
+                    tag = exerciseData.id
+                    isCloseIconVisible = true
+                    setOnCloseIconClickListener {
+                        // chip의 x 버튼이 눌린 경우
+                        binding.chooseChipGroup.removeView(this)
+                        chooseExerciseRecyclerAdapter.uncheckExercise(exerciseData.id)
+                    }
+                }
+                binding.chooseChipGroup.addView(chip)
+            } else {
+                val chipToRemove =
+                    binding.chooseChipGroup.findViewWithTag<Chip>(exerciseData.id)
+                chipToRemove?.let {
+                    binding.chooseChipGroup.removeView(it)
+                }
+            }
         }
+    }
+
+    // 체크된 아이템 개수를 업데이트하고 버튼의 텍스트를 변경하는 메소드
+    private fun updateCheckedCount(checkedCount: Int) {
+        binding.countChooseBtn.text = if (checkedCount > 0) {
+            "${checkedCount}개의 운동 추가하기"
+        } else {
+            "운동을 선택해주세요!"
+        }
+        binding.countChooseBtn.isEnabled = checkedCount > 0
     }
 }

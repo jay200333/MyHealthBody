@@ -9,8 +9,23 @@
         android:scrollbars="horizontal"
         android:id="@+id/choose_tab" />
     <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/choose_exercise_recycler"
-        android:layout_marginTop="15dp" android:layout_below="@id/choose_tab" android:layout_above="@id/count_choose_btn"/>
+        android:layout_height="0dp" android:id="@+id/choose_exercise_recycler"
+            android:layout_above="@id/chip_scroll_view"
+        android:layout_marginTop="15dp" android:layout_below="@id/choose_tab" />
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chip_scroll_view"
+            android:scrollbars="none"
+            android:layout_above="@id/count_choose_btn">
+        <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/choose_chipGroup"
+                android:padding="4dp"
+                app:singleLine="true" />
+    </HorizontalScrollView>
+
     <Button android:layout_width="match_parent" android:layout_height="wrap_content"
         android:enabled="false" android:layout_alignParentBottom="true" android:text="운동을 선택해주세요!"
         android:id="@+id/count_choose_btn" android:layout_margin="10dp" />
