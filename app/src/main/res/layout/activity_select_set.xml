@@ -2,9 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".diaryTab.SelectSetActivity">
+    android:layout_height="match_parent" tools:context=".diaryTab.SelectSetActivity"
+        android:layout_margin="5dp">
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="운동 기록" android:id="@+id/record_txt" />
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/record_txt">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체 볼륨" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/total_volume"
+                android:layout_marginRight="30dp"
+                android:text="0kg" />
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
         android:layout_height="wrap_content" android:id="@+id/show_set_recycler"
         android:layout_below="@id/record_txt" android:layout_marginTop="20dp"

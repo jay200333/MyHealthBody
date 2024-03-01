@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.myhealthybody.model.ExerciseData
-import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.pictureTab.FragmentThree
 import com.example.myhealthybody.diaryTab.FragmentTwo
 import com.example.myhealthybody.mainView.adapter.ViewPagerAdapter

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myhealthybody.R
@@ -131,13 +132,17 @@ class AddPictureActivity : AppCompatActivity() {
         val data = mapOf(
             "email" to MyApplication.email,
             "content" to binding.addEditView.text.toString(),
-            "date" to dateToString(Date())
+            "date" to dateToString()
         )
 
         MyApplication.db.collection("news")
             .add(data)
             .addOnSuccessListener {
                 uploadImage(it.id)
+                Intent().also { intent ->
+                    intent.action = "com.example.myhealthybody.DATA_UPDATED"
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+                }
             }
             .addOnFailureListener {
                 Log.d("kim", "data save error", it)
@@ -158,7 +163,7 @@ class AddPictureActivity : AppCompatActivity() {
                     val data = mapOf(
                         "email" to MyApplication.email,
                         "content" to binding.addEditView.text.toString(),
-                        "date" to dateToString(Date()),
+                        "date" to dateToString(),
                         "imageUrl" to imageUrl
 
                     )
@@ -185,11 +190,10 @@ class AddPictureActivity : AppCompatActivity() {
             }
     }
 
-    private fun dateToString(date: Date): String {
-        val format = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val mNow = System.currentTimeMillis()
-        val mDate = Date(mNow)
-        Log.d("kim", "$mDate")
-        return format.format(mDate)
+    private fun dateToString(): String {
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        val today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA).time
+        return format.format(today)
     }
 }

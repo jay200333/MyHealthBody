@@ -1,11 +1,10 @@
 package com.example.myhealthybody.diaryTab.adapter
 
 import android.content.Intent
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthybody.model.ExerciseData
-import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.adapter.BaseAdapter
 import com.example.myhealthybody.databinding.ChooseExerciseItemBinding
 import com.example.myhealthybody.healthTab.FragmentOneItemActivity

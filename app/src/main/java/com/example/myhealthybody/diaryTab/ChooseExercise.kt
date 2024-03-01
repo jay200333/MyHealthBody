@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthybody.model.ExerciseData
-import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityChooseExerciseBinding
 import com.example.myhealthybody.diaryTab.adapter.ChooseExerciseRecyclerAdapter

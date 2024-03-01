@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthybody.model.ExerciseData
-import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.R
 import com.example.myhealthybody.RecyclerDecoration
 import com.example.myhealthybody.databinding.FragmentOneBinding

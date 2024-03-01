@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthybody.model.ExerciseData
-import com.example.myhealthybody.ExerciseViewModel
+import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.databinding.ActivitySelectSetBinding
 import com.example.myhealthybody.diaryTab.adapter.SelectSetAdapter
+import com.example.myhealthybody.diaryTab.adapter.TotalWeightUpdateListener
 import com.example.myhealthybody.model.EditData
 import com.example.myhealthybody.model.SelectSetData
 
-class SelectSetActivity : AppCompatActivity() {
+class SelectSetActivity : AppCompatActivity(), TotalWeightUpdateListener {
     private lateinit var binding: ActivitySelectSetBinding
     private lateinit var viewModel: ExerciseViewModel
     private lateinit var selectSetRecyclerView: RecyclerView
@@ -32,7 +33,7 @@ class SelectSetActivity : AppCompatActivity() {
             intent.getSerializableExtra("selectedExercises") as? List<ExerciseData> ?: return
         // selectedExercises를 SelectSetData 리스트로 변환
         val selectSetItems = selectedExercises.map { SelectSetData(it, EditData()) }.toMutableList()
-        selectSetAdapter = SelectSetAdapter(selectSetItems, viewModel)
+        selectSetAdapter = SelectSetAdapter(selectSetItems, viewModel, this)
         binding.showSetRecycler.apply {
             layoutManager = LinearLayoutManager(this@SelectSetActivity)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
@@ -40,22 +41,8 @@ class SelectSetActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onTotalWeightUpdated(totalWeight: Int) {
+        binding.totalVolume.text = "$totalWeight kg"
+    }
 }
-
-//        viewModel.checkedExercises.observe(this) { checkedExercises ->
-//            setUpRecyclerView(checkedExercises)
-//            selectSetAdapter.updateData(checkedExercises)
-//        }
-
-//    private fun setUpRecyclerView(checkedExercises: List<ExerciseData>) {
-//        if (!::selectSetAdapter.isInitialized) {
-//            selectSetAdapter = SelectSetAdapter(checkedExercises.toMutableList(), viewModel)
-//            selectSetRecyclerView.apply {
-//                layoutManager = LinearLayoutManager(this@SelectSetActivity)
-//                addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-//                adapter = selectSetAdapter
-//            }
-//        } else {
-//            selectSetAdapter.updateData(checkedExercises)
-//        }
-//    }

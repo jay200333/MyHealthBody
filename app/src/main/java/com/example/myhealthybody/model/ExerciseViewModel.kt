@@ -1,10 +1,10 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.model
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myhealthybody.model.ExerciseData
+import com.example.myhealthybody.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

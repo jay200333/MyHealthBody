@@ -5,6 +5,7 @@ import com.example.myhealthybody.adapter.BaseAdapter
 import com.example.myhealthybody.databinding.PictureItemBinding
 import com.example.myhealthybody.mainView.MyApplication
 import com.example.myhealthybody.model.PictureData
+import com.example.myhealthybody.model.PictureViewModel
 
 class PictureRecyclerAdapter(
     pictureInfo: List<PictureData>
