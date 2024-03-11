@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myhealthybody.RecyclerDecoration
+import com.example.myhealthybody.util.RecyclerDecoration
 import com.example.myhealthybody.databinding.ActivityFragmentOneItemBinding
 import com.example.myhealthybody.healthTab.adapter.FragmentOneClickedRecyclerAdapter
 

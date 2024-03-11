@@ -68,7 +68,7 @@ class AddPictureActivity : AppCompatActivity() {
                 arrayOf<String>(MediaStore.Images.Media.DATA), null, null, null
             )
             cursor?.moveToFirst().let {
-                filePath = cursor?.getString(0) as String
+                filePath = cursor?.getString(0) as? String ?: ""
             }
             Log.d("kim", "filePath : $filePath")
         }

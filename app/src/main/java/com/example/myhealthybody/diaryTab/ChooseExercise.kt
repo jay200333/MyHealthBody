@@ -26,6 +26,7 @@ class ChooseExercise : AppCompatActivity(), OnCheckboxChangeCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityChooseExerciseBinding.inflate(layoutInflater)
         chooseExerciseRecyclerView = binding.chooseExerciseRecycler
+        val selectedDate = intent.getStringExtra("selectedDate")
         setContentView(binding.root)
         setupTabs()
 
@@ -42,6 +43,7 @@ class ChooseExercise : AppCompatActivity(), OnCheckboxChangeCallback {
             val selectedExercises = viewModel.checkedExercises.value ?: return@setOnClickListener
             val intent = Intent(this, SelectSetActivity::class.java)
             intent.putExtra("selectedExercises", selectedExercises as Serializable)
+            intent.putExtra("selectedDate", selectedDate)
             startActivity(intent)
         }
     }
@@ -70,7 +72,8 @@ class ChooseExercise : AppCompatActivity(), OnCheckboxChangeCallback {
     }
 
     private fun setUpRecyclerView(exerciseData: List<ExerciseData>) {
-        chooseExerciseRecyclerAdapter = ChooseExerciseRecyclerAdapter(exerciseData, viewModel, this)
+        chooseExerciseRecyclerAdapter =
+            ChooseExerciseRecyclerAdapter(exerciseData, viewModel, this)
         chooseExerciseRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))

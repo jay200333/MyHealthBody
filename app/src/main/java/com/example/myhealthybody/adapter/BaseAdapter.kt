@@ -6,13 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseAdapter<T, VB : ViewBinding>(
-    private val items: List<T>,
+    private var items: List<T>,
     private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> VB
 ) : RecyclerView.Adapter<BaseAdapter<T, VB>.BaseViewHolder>() {
 
     abstract inner class BaseViewHolder(private val binding: VB) :
         RecyclerView.ViewHolder(binding.root) {
-        abstract fun bind(item: T)
+        abstract fun bind(item: T, position: Int)
+    }
+
+    fun updateDataSet(newItems: List<T>) {
+        this.items = newItems
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = items.size
@@ -26,6 +31,6 @@ abstract class BaseAdapter<T, VB : ViewBinding>(
     abstract fun getViewHolder(binding: VB): BaseViewHolder
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], position)
     }
 }

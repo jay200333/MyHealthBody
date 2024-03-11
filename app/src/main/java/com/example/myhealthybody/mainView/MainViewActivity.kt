@@ -1,5 +1,6 @@
 package com.example.myhealthybody.mainView
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,15 @@ class MainViewActivity : AppCompatActivity() {
         ViewModelProvider(this)[ExerciseViewModel::class.java]
         setViewpagerInit()
         setTabInit()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        // 인텐트에서 "navigateTo" 값 가져오기
+        val navigateTo = intent?.getStringExtra("navigateTo")
+        if (navigateTo == "FragmentTwo") {
+            mvBinding.mainViewPager.currentItem = 1
+        }
     }
 
     private fun setViewpagerInit() {

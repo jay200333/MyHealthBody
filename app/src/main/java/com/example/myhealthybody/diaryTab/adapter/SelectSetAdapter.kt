@@ -12,8 +12,11 @@ import com.example.myhealthybody.adapter.BaseAdapter
 import com.example.myhealthybody.databinding.ExerciseOneLineBinding
 import com.example.myhealthybody.databinding.ExerciseSetItemBinding
 import com.example.myhealthybody.healthTab.FragmentOneItemActivity
+import com.example.myhealthybody.model.EditData
 import com.example.myhealthybody.model.EditTextLine
+import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.model.SelectSetData
+import com.example.myhealthybody.model.SetItem
 
 interface TotalWeightUpdateListener {
     fun onTotalWeightUpdated(totalWeight: Int)
@@ -29,8 +32,9 @@ class SelectSetAdapter(
         ExerciseSetItemBinding::inflate
     ) {
     private var totalWeightSum = 0
-    override fun getViewHolder(binding: ExerciseSetItemBinding): BaseViewHolder =
-        SelectSetViewHolder(binding)
+    override fun getViewHolder(binding: ExerciseSetItemBinding): BaseViewHolder {
+        return SelectSetViewHolder(binding)
+    }
 
     inner class SelectSetViewHolder(private val binding: ExerciseSetItemBinding) :
         BaseViewHolder(binding) {
@@ -63,6 +67,14 @@ class SelectSetAdapter(
                 binding.layoutContainer,
                 false
             )
+
+            // 새로운 세트 추가 시 기본값을 0으로 설정
+            val defaultEditTextLine = EditTextLine("0", "0")
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val item = exercises[position]
+                item.editData.editTextLines.add(defaultEditTextLine)
+            }
             setViewBinding.setCnt.text = (binding.layoutContainer.childCount + 1).toString()
             setViewBinding.weight.addTextChangedListener { editable ->
                 val weight = editable.toString()
@@ -108,9 +120,6 @@ class SelectSetAdapter(
                         item.editData.editTextLines.removeAt(childCount - 1)
                     }
                     binding.layoutContainer.removeViewAt(childCount - 1)
-//                    if (item.editData.editTextLines.size > 0) {
-//                        item.editData.editTextLines.removeAt(item.editData.editTextLines.lastIndex)
-//                    }
                 }
                 updateTotalWeight()
                 updateTotalWeightSum()
@@ -156,11 +165,35 @@ class SelectSetAdapter(
             binding.totalWeight.text = "총 볼륨 " + totalWeight.toString() + "kg"
         }
 
-        override fun bind(item: SelectSetData) {
+        override fun bind(item: SelectSetData, position: Int) {
             binding.exerciseName.text = item.selectData.name
             binding.exerciseTarget.text = item.selectData.target + " | "
             binding.layoutContainer.removeAllViews()
             addSetView()
+        }
+    }
+
+    fun updateDataSetWithExerciseData(newExercises: List<ExerciseData>) {
+        this.exercises.clear() // 기존 데이터를 지웁니다.
+        // 새로운 데이터로 변환
+        val updatedList = newExercises.map { exerciseData ->
+            SelectSetData(exerciseData, EditData())
+        }
+        this.exercises.addAll(updatedList) // 변환된 데이터를 추가합니다.
+        notifyDataSetChanged() // 어댑터에 데이터 변경을 알립니다.
+    }
+
+    fun getAllExerciseData(): List<ExerciseData> {
+        return exercises.map { selectedSetData ->
+            val setItems =
+                selectedSetData.editData.editTextLines.mapIndexed { index, editTextLine ->
+                    SetItem(
+                        setCount = index + 1,
+                        weight = editTextLine.kg.toIntOrNull() ?: 0,
+                        tryCount = editTextLine.count.toIntOrNull() ?: 0
+                    )
+                }
+            selectedSetData.selectData.copy(setItems = setItems)
         }
     }
 

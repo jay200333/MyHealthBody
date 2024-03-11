@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityMainBinding
+import com.example.myhealthybody.diaryTab.FragmentTwo
 import com.example.myhealthybody.login.LoginActivity
 
 

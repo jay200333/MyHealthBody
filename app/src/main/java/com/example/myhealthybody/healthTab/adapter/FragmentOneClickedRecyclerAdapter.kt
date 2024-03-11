@@ -13,7 +13,7 @@ class FragmentOneClickedRecyclerAdapter(instruction: List<String>) :
 
     inner class FragmentOneClickedViewHolder(private val binding: ActivityFragmentClickedInstructionBinding) :
         BaseViewHolder(binding) {
-        override fun bind(item: String) {
+        override fun bind(item: String, position: Int) {
             binding.instructionTxt.text = item
         }
     }

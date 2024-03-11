@@ -37,7 +37,7 @@ class ChooseExerciseRecyclerAdapter(
     override fun getItemCount(): Int = filteredExercises.size
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.bind(filteredExercises[position])
+        holder.bind(filteredExercises[position], position)
     }
 
     override fun getViewHolder(binding: ChooseExerciseItemBinding): BaseViewHolder =
@@ -45,12 +45,11 @@ class ChooseExerciseRecyclerAdapter(
 
     inner class ChooseExerciseViewHolder(private val binding: ChooseExerciseItemBinding) :
         BaseViewHolder(binding) {
-        override fun bind(item: ExerciseData) {
+        override fun bind(item: ExerciseData, position: Int) {
             binding.checkboxExercise.setOnCheckedChangeListener(null)
             binding.checkboxExercise.isChecked = checkedItems.contains(item.id)
 
             binding.checkboxExercise.setOnCheckedChangeListener { _, isChecked ->
-                //val exercise = filteredExercises[adapterPosition]
                 if (isChecked) {
                     checkedItems.add(item.id)
                 } else {

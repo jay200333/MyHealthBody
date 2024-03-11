@@ -7,8 +7,8 @@
         android:background="?attr/colorPrimary" app:titleTextColor="@android:color/white"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <ImageView android:id="@+id/addImageView" android:layout_width="match_parent"
-        android:layout_height="200dp" android:scaleType="fitXY" />
+    <ImageView android:id="@+id/addImageView" android:layout_marginTop="10dp" android:layout_width="match_parent"
+        android:layout_height="200dp" android:scaleType="fitCenter" android:focusable="true"/>
 
     <EditText android:id="@+id/addEditView" android:layout_width="match_parent"
         android:layout_height="0dp" android:layout_weight="1" android:hint="내용 입력해 주세요"

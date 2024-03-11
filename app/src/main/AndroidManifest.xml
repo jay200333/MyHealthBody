@@ -30,7 +30,8 @@
             android:exported="false" />
         <activity
             android:name=".mainView.MainViewActivity"
-            android:exported="false" />
+            android:launchMode="singleTop"
+            android:exported="true" />
         <activity
             android:name=".login.PasswordActivity"
             android:exported="false" />

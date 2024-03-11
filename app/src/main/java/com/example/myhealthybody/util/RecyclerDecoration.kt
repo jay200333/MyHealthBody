@@ -1,4 +1,4 @@
-package com.example.myhealthybody
+package com.example.myhealthybody.util
 
 import android.content.Context
 import android.graphics.Rect

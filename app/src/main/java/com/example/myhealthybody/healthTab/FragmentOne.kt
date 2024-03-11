@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.model.ExerciseViewModel
 import com.example.myhealthybody.R
-import com.example.myhealthybody.RecyclerDecoration
+import com.example.myhealthybody.util.RecyclerDecoration
 import com.example.myhealthybody.databinding.FragmentOneBinding
 import com.example.myhealthybody.healthTab.adapter.RecyclerAdapter
 import com.google.android.material.tabs.TabLayout

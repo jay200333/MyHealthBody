@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.myhealthybody"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -21,7 +21,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
 
-        // d
         val localPropertiesFile = rootProject.file("local.properties")
         if (localPropertiesFile.exists()) {
             val properties = Properties().apply {
@@ -93,6 +92,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("com.github.kizitonwose:CalendarView:1.0.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

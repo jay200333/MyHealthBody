@@ -27,12 +27,12 @@ class RecyclerAdapter(
     override fun getItemCount(): Int = filteredExercises.size
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.bind(filteredExercises[position])
+        holder.bind(filteredExercises[position], position)
     }
 
     inner class FirstFragmentViewHolder(private val binding: FragmentOneItemBinding) :
         BaseViewHolder(binding) {
-        override fun bind(item: ExerciseData) {
+        override fun bind(item: ExerciseData, position: Int) {
             binding.exerciseName.text = item.name
             binding.exerciseTarget.text = item.target
 
