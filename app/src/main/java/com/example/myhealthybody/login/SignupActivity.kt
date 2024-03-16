@@ -57,7 +57,7 @@ class SignupActivity : AppCompatActivity() {
                                             baseContext,
                                             "회원가입이 완료되었습니다." +
                                                     "전송된 메일을 확인해 주세요.",
-                                            Toast.LENGTH_SHORT
+                                            Toast.LENGTH_LONG
                                         ).show()
                                         val loginIntent = Intent(this, LoginActivity::class.java)
                                         startActivity(loginIntent)

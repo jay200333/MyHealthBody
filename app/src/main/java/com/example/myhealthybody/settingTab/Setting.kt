@@ -73,6 +73,9 @@ class Setting : Fragment() {
                 }
             }
         }
+        mBinding.changepwBtn.setOnClickListener {
+            ChangePW()
+        }
         mBinding.logoutBtn.setOnClickListener {
             showLogoutAlert()
         }
@@ -89,6 +92,27 @@ class Setting : Fragment() {
             setNegativeButton("취소", null)
             show()
         }.setCanceledOnTouchOutside(true)
+    }
+
+    private fun ChangePW() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let { currentUser ->
+            when {
+                hasEmailProvider(currentUser) -> {
+                    val pwIntent = Intent(activity, ChangePWActivity::class.java)
+                    startActivity(pwIntent)
+                    requireActivity().finish()
+                }
+                // 사용자가 Google 계정으로 로그인
+                hasGoogleProvider(currentUser) -> {
+                    Toast.makeText(
+                        context,
+                        "Google 계정은 Google 사이트에서 변경하실 수 있습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun showLogoutAlert() {

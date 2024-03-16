@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settingTab.ChangePWActivity">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="비밀번호 변경" android:textSize="30sp" android:textStyle="bold"
+        android:layout_gravity="center" android:layout_marginTop="100dp" />
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="50dp"
+        android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+        app:passwordToggleEnabled="true"
+        android:layout_gravity="center">
+        <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/change_pw" android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:background="@drawable/rect_background" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_margin="5dp"
+        android:layout_gravity="center" app:passwordToggleEnabled="true">
+        <EditText android:id="@+id/change_pw2" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:inputType="textPassword"
+            android:hint="비밀번호 확인" android:background="@drawable/rect_background" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button android:id="@+id/check_btn" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="비밀번호 확인"
+        android:layout_gravity="center" android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/pw_editView" />
+
+    <Button android:id="@+id/change_pw_btn" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="50dp"
+        android:layout_gravity="center" android:text="비밀번호 변경" android:enabled="false" />
+
+</LinearLayout>

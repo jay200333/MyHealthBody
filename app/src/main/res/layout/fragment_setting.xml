@@ -84,6 +84,28 @@
         android:layout_width="match_parent"
         android:layout_height="5px"
         android:background="@color/whitegray" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changepw_btn">
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:text="비밀번호 변경" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_chevron_right_24" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="@color/whitegray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
