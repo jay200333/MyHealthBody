@@ -1,10 +1,12 @@
 package com.example.myhealthybody.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.myhealthybody.mainView.MyApplication
 import com.example.myhealthybody.databinding.ActivitySignupBinding
+import com.example.myhealthybody.mainView.MainViewActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -57,6 +59,8 @@ class SignupActivity : AppCompatActivity() {
                                                     "전송된 메일을 확인해 주세요.",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                        val loginIntent = Intent(this, LoginActivity::class.java)
+                                        startActivity(loginIntent)
                                     } else {
                                         Toast.makeText(baseContext, "메일 발송 실패", Toast.LENGTH_SHORT)
                                             .show()

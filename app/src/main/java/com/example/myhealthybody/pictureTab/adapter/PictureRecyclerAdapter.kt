@@ -14,12 +14,24 @@ import com.example.myhealthybody.databinding.PictureItemBinding
 import com.example.myhealthybody.mainView.MyApplication
 import com.example.myhealthybody.model.PictureData
 import com.example.myhealthybody.model.PictureViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class PictureRecyclerAdapter(
-    pictureInfo: List<PictureData>
+    var pictureInfo: MutableList<PictureData>
 ) : BaseAdapter<PictureData, PictureItemBinding>(pictureInfo, PictureItemBinding::inflate) {
     override fun getViewHolder(binding: PictureItemBinding): BaseViewHolder =
         ThirdFragmentViewHolder(binding)
+
+    fun addItem(newItem: PictureData) {
+        pictureInfo.add(newItem)
+        notifyItemInserted(pictureInfo.size - 1)
+    }
+
+    fun updateItems(newItems: MutableList<PictureData>) {
+        this.pictureInfo.clear()
+        this.pictureInfo.addAll(newItems)
+        notifyDataSetChanged()
+    }
 
     inner class ThirdFragmentViewHolder(private val binding: PictureItemBinding) :
         BaseViewHolder(binding) {

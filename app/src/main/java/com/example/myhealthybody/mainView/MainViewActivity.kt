@@ -1,8 +1,10 @@
 package com.example.myhealthybody.mainView
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.model.ExerciseViewModel
@@ -11,6 +13,7 @@ import com.example.myhealthybody.diaryTab.FragmentTwo
 import com.example.myhealthybody.mainView.adapter.ViewPagerAdapter
 import com.example.myhealthybody.databinding.ActivityMainViewBinding
 import com.example.myhealthybody.healthTab.FragmentOne
+import com.example.myhealthybody.settingTab.Setting
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainViewActivity : AppCompatActivity() {
@@ -25,6 +28,24 @@ class MainViewActivity : AppCompatActivity() {
         ViewModelProvider(this)[ExerciseViewModel::class.java]
         setViewpagerInit()
         setTabInit()
+
+        // 뒤로 가기 콜백
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showCloseAppAlert()
+            }
+        })
+    }
+
+    fun showCloseAppAlert() {
+        AlertDialog.Builder(this@MainViewActivity).run {
+            setMessage("앱을 종료하시겠습니까?")
+            setPositiveButton("확인") { _, _ ->
+                finishAffinity()
+            }
+            setNegativeButton("취소", null)
+            show()
+        }.setCanceledOnTouchOutside(false)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -40,7 +61,8 @@ class MainViewActivity : AppCompatActivity() {
         val fragmentList = listOf(
             FragmentOne(),
             FragmentTwo(),
-            FragmentThree()
+            FragmentThree(),
+            Setting()
         )
         viewPagerAdapter = ViewPagerAdapter(this)
         viewPagerAdapter.fragments.addAll(fragmentList)
@@ -61,6 +83,10 @@ class MainViewActivity : AppCompatActivity() {
 
                 2 -> {
                     tab.text = "오운완"
+                }
+
+                3 -> {
+                    tab.text = "설정"
                 }
             }
         }.attach()

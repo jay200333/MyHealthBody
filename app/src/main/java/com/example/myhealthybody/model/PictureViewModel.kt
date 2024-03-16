@@ -7,14 +7,10 @@ import com.example.myhealthybody.mainView.MyApplication
 import com.google.firebase.firestore.Query
 
 class PictureViewModel : ViewModel() {
-    private val _pictures = MutableLiveData<List<PictureData>>()
-    val pictures: LiveData<List<PictureData>> = _pictures
+    private val _pictures = MutableLiveData<PictureData>()
+    val pictures: LiveData<PictureData> = _pictures
 
-    fun fetchPictures() {
-        MyApplication.db.collection("news").orderBy("date", Query.Direction.DESCENDING).get()
-            .addOnSuccessListener { result ->
-                val itemList = result.toObjects(PictureData::class.java)
-                _pictures.value = itemList
-            }
+    fun updatePicture(pictureData: PictureData) {
+        _pictures.value = pictureData
     }
 }

@@ -14,25 +14,30 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityAddPictureBinding
 import com.example.myhealthybody.mainView.MyApplication
+import com.example.myhealthybody.model.PictureData
+import com.example.myhealthybody.model.PictureViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddPictureActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddPictureBinding
+    private lateinit var pictureViewModel: PictureViewModel
     private lateinit var filePath: String
     private lateinit var imageUri: Uri
     val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         if (it.all { permission -> permission.value }) {
-            saveStore()
+            uploadImage()
         } else {
             Toast.makeText(this, "permission denied...", Toast.LENGTH_SHORT).show()
         }
@@ -42,6 +47,8 @@ class AddPictureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPictureBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        pictureViewModel = ViewModelProvider(this)[PictureViewModel::class.java]
 
         val toolbar: Toolbar = binding.addToolbar
         setSupportActionBar(toolbar)
@@ -95,7 +102,7 @@ class AddPictureActivity : AppCompatActivity() {
                             "android.permission.READ_MEDIA_IMAGES"
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        saveStore()
+                        uploadImage()
                     } else {
                         permissionLauncher.launch(
                             arrayOf<String>(
@@ -109,7 +116,7 @@ class AddPictureActivity : AppCompatActivity() {
                             "android.permission.READ_EXTERNAL_STORAGE"
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        saveStore()
+                        uploadImage()
                     } else {
                         permissionLauncher.launch(
                             arrayOf(
@@ -126,33 +133,12 @@ class AddPictureActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //....................
-    private fun saveStore() {
+    private fun uploadImage() {
         //add............................
-        val data = mapOf(
-            "email" to MyApplication.email,
-            "content" to binding.addEditView.text.toString(),
-            "date" to dateToString()
-        )
-
-        MyApplication.db.collection("news")
-            .add(data)
-            .addOnSuccessListener {
-                uploadImage(it.id)
-                Intent().also { intent ->
-                    intent.action = "com.example.myhealthybody.DATA_UPDATED"
-                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
-                }
-            }
-            .addOnFailureListener {
-                Log.d("kim", "data save error", it)
-            }
-    }
-
-    private fun uploadImage(docId: String) {
-        //add............................
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "unknown"
         val storage = MyApplication.storage
         val storageRef = storage.reference
+        val docId = MyApplication.db.collection("userImages").document().id
         val imgRef = storageRef.child("images/${docId}.jpg")
 
         imgRef.putFile(imageUri)
@@ -160,15 +146,18 @@ class AddPictureActivity : AppCompatActivity() {
                 imgRef.downloadUrl.addOnSuccessListener { uri ->
                     // Firebase에 저장할 메타데이터 준비
                     val imageUrl = uri.toString()
-                    val data = mapOf(
-                        "email" to MyApplication.email,
-                        "content" to binding.addEditView.text.toString(),
-                        "date" to dateToString(),
-                        "imageUrl" to imageUrl
+                    val data = PictureData().apply {
+                        this.docId = docId
+                        this.userId = userId
+                        this.email = MyApplication.email
+                        this.content = binding.addEditView.text.toString()
+                        this.date = dateToString()
+                        this.imageUrl = imageUrl
+                    }
+                    pictureViewModel.updatePicture(data)
 
-                    )
                     // FireStore에 이미지 메타데이터 저장
-                    MyApplication.db.collection("news").document(docId).set(data)
+                    MyApplication.db.collection("userImages").document(docId).set(data)
                         .addOnSuccessListener {
                             Toast.makeText(
                                 this,
@@ -180,6 +169,7 @@ class AddPictureActivity : AppCompatActivity() {
                             Log.w("AddPictureActivity", "Error adding document", e)
                             Toast.makeText(this, "Failed to save data.", Toast.LENGTH_SHORT).show()
                         }
+                    //MyApplication.db.collection("allImages").document(docId).set(data)
                 }.addOnFailureListener { e ->
                     Log.w("AddPictureActivity", "Error getting document", e)
                     Toast.makeText(this, "Failed to get image URL.", Toast.LENGTH_SHORT).show()

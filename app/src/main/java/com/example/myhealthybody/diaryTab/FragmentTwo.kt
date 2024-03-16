@@ -128,7 +128,9 @@ class FragmentTwo : Fragment() {
             setPositiveButton("확인") { _, _ ->
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@setPositiveButton
                 // 해당 날짜의 운동 정보 삭제
-                FirebaseDatabase.getInstance().getReference("users/$userId/workouts/$formattedDate/exercises").removeValue().addOnCompleteListener { task ->
+                FirebaseDatabase.getInstance()
+                    .getReference("users/$userId/workouts/$formattedDate/exercises").removeValue()
+                    .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // 삭제 성공 시 RecyclerView 업데이트
                             (dailyInformationView.adapter as? ExerciseDataAdapter)?.updateDataSet(
