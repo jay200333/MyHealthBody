@@ -43,7 +43,7 @@ class FragmentThree : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = mBinding.pictureRecyclerView
-        val swipreRefreshLayout = mBinding.swipeRefreshLayout
+        val swipeRefreshLayout = mBinding.swipeRefreshLayout
         if (MyApplication.checkAuth()) {
             getItemList(false)
         } else {
@@ -57,7 +57,7 @@ class FragmentThree : Fragment() {
         mBinding.addFab.setOnClickListener {
             startActivity(Intent(requireContext(), AddPictureActivity::class.java))
         }
-        swipreRefreshLayout.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             getItemList(true)
         }
     }

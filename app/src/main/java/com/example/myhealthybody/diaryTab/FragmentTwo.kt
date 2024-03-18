@@ -58,7 +58,11 @@ class FragmentTwo : Fragment() {
         val defaultDate = today.toString()
         dailyInformationView = mBinding.fragmentTwoRecyclerview
 
-        val adapter = ExerciseDataAdapter(emptyList())
+        val adapter = ExerciseDataAdapter(emptyList(), requireContext()) { _, _ ->
+            val intent = Intent(requireContext(), DetailExerciseActivity::class.java)
+            intent.putExtra("selectedDate", mBinding.setdateTxt.text.toString())
+            startActivity(intent)
+        }
         dailyInformationView.adapter = adapter
         dailyInformationView.layoutManager = LinearLayoutManager(context)
         dailyInformationView.addItemDecoration(RecyclerDecoration(requireContext()))
@@ -100,7 +104,7 @@ class FragmentTwo : Fragment() {
 
             val formattedDate =
                 selectedDate.split("년 ", "월 ", "일").let { "${it[0]}-${it[1]}-${it[2]}" }
-            Log.d("kim","formatted : $formattedDate")
+            Log.d("kim", "formatted : $formattedDate")
             chooseExerciseIntent.putExtra("selectedDate", formattedDate)
             startActivity(chooseExerciseIntent)
         }

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyHealthyBody"
         tools:targetApi="31">
         <activity
+            android:name=".diaryTab.DetailExerciseActivity"
+            android:exported="false" />
+        <activity
             android:name=".settingTab.ChangePWActivity"
             android:exported="false" />
         <activity

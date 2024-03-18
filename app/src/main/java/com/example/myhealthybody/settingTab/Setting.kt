@@ -74,7 +74,7 @@ class Setting : Fragment() {
             }
         }
         mBinding.changepwBtn.setOnClickListener {
-            ChangePW()
+            changePW()
         }
         mBinding.logoutBtn.setOnClickListener {
             showLogoutAlert()
@@ -94,7 +94,7 @@ class Setting : Fragment() {
         }.setCanceledOnTouchOutside(true)
     }
 
-    private fun ChangePW() {
+    private fun changePW() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let { currentUser ->
             when {

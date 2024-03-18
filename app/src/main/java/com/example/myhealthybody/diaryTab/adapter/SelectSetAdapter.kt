@@ -126,20 +126,6 @@ class SelectSetAdapter(
             }
         }
 
-        private fun removeSetView(setViewBinding: ExerciseOneLineBinding) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                val item = exercises[position]
-                val setIndex = binding.layoutContainer.indexOfChild(setViewBinding.root)
-                if (setIndex != -1) {
-                    item.editData.editTextLines.removeAt(setIndex)
-                    binding.layoutContainer.removeViewAt(setIndex)
-                    updateTotalWeightSum()
-                    updateTotalWeight()
-                }
-            }
-        }
-
         private fun updateTotalWeightSum() {
             totalWeightSum = 0
             for (exercise in exercises) {
@@ -193,7 +179,9 @@ class SelectSetAdapter(
                         tryCount = editTextLine.count.toIntOrNull() ?: 0
                     )
                 }
-            selectedSetData.selectData.copy(setItems = setItems)
+            // 세트 항목의 총 무계를 계산
+            val totalWeight = setItems.sumOf { it.weight * it.tryCount }
+            selectedSetData.selectData.copy(setItems = setItems, setTotalWeight = totalWeight)
         }
     }
 

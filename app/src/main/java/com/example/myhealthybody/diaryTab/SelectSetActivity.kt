@@ -79,12 +79,22 @@ class SelectSetActivity : AppCompatActivity(), TotalWeightUpdateListener {
             Toast.makeText(baseContext, "날짜가 지정되지 않았습니다.", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // 전체 볼륨
+        val sessionTotalWeight = exercises.sumOf { it.setTotalWeight }
         val dateRef = usersRef.child(uid).child("workouts").child(date)
         exercises.forEach { exercise ->
             val exerciseId = dateRef.child("exercises").push().key ?: return
-            val exerciseMap = exercise.toMap()
+            val exerciseMap = exercise.toMap().toMutableMap()
+            exerciseMap["setTotalWeight"] = exercise.setTotalWeight
             dateRef.child("exercises").child(exerciseId).setValue(exerciseMap)
         }
+
+        val sessionInfo = mapOf(
+            "date" to date,
+            "sessionTotalWeight" to sessionTotalWeight
+        )
+        dateRef.child("sessionInfo").setValue(sessionInfo)
     }
 
     private fun loadWorkoutDataForDate(date: String) {
@@ -109,17 +119,6 @@ class SelectSetActivity : AppCompatActivity(), TotalWeightUpdateListener {
                 }
             })
     }
-
-//    private fun updateRecyclerView(exercises: List<ExerciseData>) {
-//        // SelectSetAdapter 인스턴스가 이미 있으면 데이터 세트 업데이트, 없으면 새로 생성
-//        if (::selectSetAdapter.isInitialized) {
-//            selectSetAdapter.updateDataSetWithExerciseData(exercises)
-//        } else {
-//            val selectSetItems = exercises.map { SelectSetData(it, EditData()) }.toMutableList()
-//            selectSetAdapter = SelectSetAdapter(selectSetItems, viewModel, this)
-//            selectSetRecyclerView.adapter = selectSetAdapter
-//        }
-//    }
 
     fun ExerciseData.toMap(): Map<String, Any> {
         return mapOf(
@@ -147,3 +146,14 @@ class SelectSetActivity : AppCompatActivity(), TotalWeightUpdateListener {
         binding.totalVolume.text = "$totalWeight kg"
     }
 }
+
+//    private fun updateRecyclerView(exercises: List<ExerciseData>) {
+//        // SelectSetAdapter 인스턴스가 이미 있으면 데이터 세트 업데이트, 없으면 새로 생성
+//        if (::selectSetAdapter.isInitialized) {
+//            selectSetAdapter.updateDataSetWithExerciseData(exercises)
+//        } else {
+//            val selectSetItems = exercises.map { SelectSetData(it, EditData()) }.toMutableList()
+//            selectSetAdapter = SelectSetAdapter(selectSetItems, viewModel, this)
+//            selectSetRecyclerView.adapter = selectSetAdapter
+//        }
+//    }
