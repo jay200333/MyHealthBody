@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myhealthybody.RetrofitInstance
+import com.example.myhealthybody.domain.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +30,6 @@ class ExerciseViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     _exercisesData.postValue(response.body())
-                    Log.d("kim", "데이터를 불러오는데 성공했습니다.")
                 } else {
                     _error.postValue("Response not successful")
                 }

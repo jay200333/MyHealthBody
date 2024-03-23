@@ -11,6 +11,7 @@ data class ExerciseData(
     val target: String = "",
     val secondaryMuscles: List<String> = emptyList(),
     val instructions: List<String> = emptyList(),
-    val setItems: List<SetItem> = emptyList(),
-    val setTotalWeight: Int = 0
+    var setItems: List<SetItem> = emptyList(),
+    var setTotalWeight: Int = 0,
+    var firebaseExerciseId: String? = null
 ) : Serializable

@@ -5,15 +5,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.myhealthybody.R
 import com.example.myhealthybody.model.ExerciseData
 import com.example.myhealthybody.model.ExerciseViewModel
-import com.example.myhealthybody.pictureTab.FragmentThree
-import com.example.myhealthybody.diaryTab.FragmentTwo
+import com.example.myhealthybody.gallery.view.GalleryFragment
+import com.example.myhealthybody.diary.view.DiaryFragment
 import com.example.myhealthybody.mainView.adapter.ViewPagerAdapter
 import com.example.myhealthybody.databinding.ActivityMainViewBinding
-import com.example.myhealthybody.healthTab.FragmentOne
-import com.example.myhealthybody.settingTab.Setting
+import com.example.myhealthybody.healthTraining.view.HealthTrainingFragment
+import com.example.myhealthybody.setting.view.SettingFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainViewActivity : AppCompatActivity() {
@@ -52,17 +54,26 @@ class MainViewActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         // 인텐트에서 "navigateTo" 값 가져오기
         val navigateTo = intent?.getStringExtra("navigateTo")
+        val selectedDate = intent?.getStringExtra("selectedDate")
+        val dataUpdated = intent?.getBooleanExtra("dataUpdated", false) ?: false
         if (navigateTo == "FragmentTwo") {
             mvBinding.mainViewPager.currentItem = 1
+            val fragment = viewPagerAdapter.fragments[1] as DiaryFragment
+            fragment.arguments = Bundle().apply {
+                putString("selectedDate", selectedDate)
+            }
+            if (dataUpdated) {
+                fragment?.refreshData()
+            }
         }
     }
 
     private fun setViewpagerInit() {
         val fragmentList = listOf(
-            FragmentOne(),
-            FragmentTwo(),
-            FragmentThree(),
-            Setting()
+            HealthTrainingFragment(),
+            DiaryFragment(),
+            GalleryFragment(),
+            SettingFragment()
         )
         viewPagerAdapter = ViewPagerAdapter(this)
         viewPagerAdapter.fragments.addAll(fragmentList)
@@ -75,18 +86,23 @@ class MainViewActivity : AppCompatActivity() {
             when (pos) {
                 0 -> {
                     tab.text = "훈련"
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.baseline_menu_book_24)
                 }
 
                 1 -> {
                     tab.text = "운동 일지"
+                    tab.icon =
+                        ContextCompat.getDrawable(this, R.drawable.baseline_calendar_month_24)
                 }
 
                 2 -> {
-                    tab.text = "오운완"
+                    tab.text = "갤러리"
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.baseline_image_24)
                 }
 
                 3 -> {
                     tab.text = "설정"
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.baseline_settings_24)
                 }
             }
         }.attach()

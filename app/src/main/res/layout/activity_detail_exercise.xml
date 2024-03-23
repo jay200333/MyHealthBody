@@ -5,13 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".diaryTab.DetailExerciseActivity">
-    <TextView
+    tools:context=".diary.view.DetailExerciseActivity">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_date"
-        android:text="3월 17일 일, 운동 요약"
-        android:layout_margin="10dp" />
+        android:layout_height="wrap_content" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_date"
+            android:textSize="16sp"
+            android:text="3월 17일 일, 운동 요약"
+            android:layout_margin="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="편집"
+            android:id="@+id/detail_edit_txt"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:textColor="@color/blue"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

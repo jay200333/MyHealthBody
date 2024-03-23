@@ -14,7 +14,7 @@ class RecyclerDecoration(val context: Context) : RecyclerView.ItemDecoration() {
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(16, 16, 16, 16)
+        outRect.set(5, 5, 5, 5)
         ViewCompat.setElevation(view, 10.0f)
     }
 }

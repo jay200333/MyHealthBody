@@ -1,17 +1,10 @@
 package com.example.myhealthybody.mainView
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import com.example.myhealthybody.R
 import com.example.myhealthybody.databinding.ActivityMainBinding
-import com.example.myhealthybody.diaryTab.FragmentTwo
-import com.example.myhealthybody.login.LoginActivity
+import com.example.myhealthybody.login.view.LoginActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mbinding.root)
-        //myCheckPermission(this)
     }
 
     override fun onStart() {
