@@ -31,7 +31,8 @@ class AddPictureActivity : AppCompatActivity() {
     private lateinit var pictureViewModel: PictureViewModel
     private lateinit var filePath: String
     private lateinit var imageUri: Uri
-    val permissionLauncher = registerForActivityResult(
+    private var isUploading: Boolean = false
+    private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         if (it.all { permission -> permission.value }) {
@@ -92,7 +93,7 @@ class AddPictureActivity : AppCompatActivity() {
             )
             requestLauncher.launch(intent)
         } else if (item.itemId === R.id.menu_add_save) {
-            if (binding.addImageView.drawable !== null && binding.addEditView.text.isNotEmpty()) {
+            if (!isUploading && binding.addImageView.drawable !== null && binding.addEditView.text.isNotEmpty()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (ContextCompat.checkSelfPermission(
                             this,
@@ -131,6 +132,7 @@ class AddPictureActivity : AppCompatActivity() {
     }
 
     private fun uploadImage() {
+        isUploading = true
         //add............................
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "unknown"
         val storage = MyApplication.storage
@@ -161,16 +163,20 @@ class AddPictureActivity : AppCompatActivity() {
                                 "Image and data saved successfully.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            isUploading = false
                             finish()
-                        }.addOnFailureListener { e ->
+                        }.addOnFailureListener {
                             Toast.makeText(this, "Failed to save data.", Toast.LENGTH_SHORT).show()
+                            isUploading = false
                         }
                     //MyApplication.db.collection("allImages").document(docId).set(data)
-                }.addOnFailureListener { e ->
+                }.addOnFailureListener {
                     Toast.makeText(this, "Failed to get image URL.", Toast.LENGTH_SHORT).show()
+                    isUploading = false
                 }
-            }.addOnFailureListener { e ->
+            }.addOnFailureListener {
                 Toast.makeText(this, "Failed to upload image.", Toast.LENGTH_SHORT).show()
+                isUploading = false
             }
     }
 
